@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blue Wave Election Night Tracker 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0b2a5b; --navy-2:#071b3d; --blue:#1d4ed8; --blue-2:#2563eb; --sky:#38bdf8; --ice:#e8f1ff; --ice-2:#dbeafe;
+  --ink:#172033; --muted:#5b6475; --line:rgba(11,42,91,.12);
+  --win:#16a34a; --win-bg:#e3f6e9; --loss:#dc2626; --loss-bg:#fdeaea; --run:#f59e0b; --run-bg:#fff4dc;
+  --card:#fff; --bg:#f4f7fc;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}
+h1,h2,h3,.poppins{font-family:Poppins,Inter,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;overflow:hidden;color:#fff;text-align:center;
+  background:linear-gradient(160deg,#0b2a5b 0%,#123a8a 45%,#1d4ed8 100%);padding:38px 20px 64px}
+.hero .waves{position:absolute;left:0;right:0;bottom:-2px;height:70px;pointer-events:none}
+.hero .stars{position:absolute;inset:0;opacity:.18;pointer-events:none;
+  background-image:radial-gradient(#fff 1px,transparent 1.6px);background-size:26px 26px}
+.logo{display:inline-flex;align-items:center;gap:12px;margin-bottom:10px}
+.logo svg{width:64px;height:64px}
+.hero h1{margin:0;font-size:clamp(28px,6vw,64px);font-weight:900;letter-spacing:.5px;line-height:1;text-shadow:0 3px 0 rgba(0,0,0,.18)}
+.hero h1 .stretch{letter-spacing:-1px}
+@media(max-width:480px){.hero h1{font-size:22px;letter-spacing:0}.hero h1 .stretch{letter-spacing:-1.5px}}
+.hero .sub{margin:10px 0 22px;font-family:Poppins;font-weight:700;font-size:clamp(14px,2.2vw,22px);letter-spacing:4px;text-transform:uppercase;opacity:.92}
+.cta{display:inline-flex;align-items:center;gap:10px;background:#fff;color:var(--navy);font-family:Poppins;font-weight:800;
+  padding:14px 24px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.25);font-size:15px;letter-spacing:.5px;text-transform:uppercase;transition:transform .15s}
+.cta:hover{transform:translateY(-2px)}
+.cta small{display:block;font-family:Inter;font-weight:600;text-transform:none;letter-spacing:0;color:var(--blue);font-size:12px}
+.hero .plug{margin-top:14px;font-size:14px;opacity:.9}
+.hero .plug a{color:#fff;text-decoration:underline;font-weight:600}
+
+/* ---------- SEASON BAR ---------- */
+.season{background:#fff;border-bottom:1px solid var(--line)}
+.season .wrap{display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap;padding:22px 20px}
+.season .label{font-family:Poppins;font-weight:800;letter-spacing:3px;font-size:13px;color:var(--navy);text-align:right;line-height:1.3}
+.donut{position:relative;width:96px;height:96px}
+.donut svg{transform:rotate(-90deg)}
+.donut .num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:Poppins;font-weight:900;font-size:22px;color:var(--navy)}
+.legend{display:flex;flex-direction:column;gap:6px;font-size:13px}
+.legend b{font-family:Poppins;font-size:16px;margin-right:4px}
+.legend .w{color:var(--win)} .legend .r{color:var(--run)} .legend .l{color:var(--loss)}
+.tagline{width:100%;text-align:center;font-style:italic;color:var(--muted);font-size:14px;margin-top:-6px}
+
+/* ---------- SECTION HEADER ---------- */
+.day{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:34px 0 14px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-family:Poppins;font-weight:800;font-size:12px;letter-spacing:1px;padding:6px 12px;border-radius:999px}
+.pill.live{background:var(--loss);color:#fff}
+.pill.live i{width:8px;height:8px;border-radius:50%;background:#fff;animation:blink 1.2s infinite}
+.pill.next{background:var(--navy);color:#fff}
+@keyframes blink{50%{opacity:.25}}
+.day h2{margin:0;font-size:clamp(22px,3.5vw,34px);font-weight:800;color:var(--navy)}
+.day .tag{margin-left:auto;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.day .tag i{display:inline-block;width:14px;height:14px;border-radius:3px;background:var(--blue)}
+.blog{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-left:5px solid var(--blue);padding:12px 16px;border-radius:10px;font-size:14px}
+.blog a.more{margin-left:auto;font-weight:700;white-space:nowrap}
+
+/* ---------- TABS + MAP ---------- */
+.tabs{display:flex;justify-content:center;gap:0;margin:26px 0 12px}
+.tabs button{font-family:Poppins;font-weight:700;font-size:13px;padding:8px 18px;border:1px solid var(--line);background:#fff;color:var(--navy);cursor:pointer}
+.tabs button:first-child{border-radius:999px 0 0 999px}.tabs button:last-child{border-radius:0 999px 999px 0}
+.tabs button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;display:grid;grid-template-columns:180px minmax(0,1fr) 170px;gap:18px;align-items:center}
+@media(max-width:860px){.panel{grid-template-columns:1fr}}
+.cats{display:flex;flex-direction:column;gap:8px}
+.cat{display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;padding:5px 8px;border-radius:8px;border:1px solid transparent}
+.cat:hover{background:var(--ice)}.cat.on{background:var(--ice-2);border-color:var(--blue)}
+.cat .k{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;color:#fff;background:var(--navy)}
+.cat .cnt{margin-left:auto;color:var(--muted);font-weight:600}
+.map{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:5px;max-width:720px;margin:0 auto;width:100%}
+.tile{aspect-ratio:1/1;border-radius:8px;background:var(--ice);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;border:2px solid transparent;transition:transform .12s;min-width:0}
+.tile:hover{transform:scale(1.08);z-index:2}
+.tile.on{border-color:var(--navy);background:var(--ice-2)}
+.tile.empty{visibility:hidden;cursor:default}
+.tile .ab{font-family:Poppins;font-weight:800;font-size:12px;color:var(--navy)}
+.tile .dots{display:flex;flex-wrap:wrap;justify-content:center;gap:2px;max-width:92%}
+.dot{width:9px;height:9px;border-radius:50%;background:#c7d2e6;display:inline-flex;align-items:center;justify-content:center;font-size:6px;font-weight:800;color:#fff;line-height:1}
+.dot.win{background:var(--win)}.dot.loss{background:var(--loss)}.dot.run{background:var(--run)}
+.tile .more{font-size:9px;color:var(--muted);font-weight:700}
+.mini{display:flex;flex-direction:column;align-items:center;gap:8px}
+.faces{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.face{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Poppins;font-weight:800;font-size:13px;color:var(--navy);background:var(--ice-2);border:3px solid #c7d2e6;cursor:pointer;position:relative}
+.face.win{border-color:var(--win)}.face.loss{border-color:var(--loss);opacity:.7}.face.run{border-color:var(--run)}
+.face:hover{transform:scale(1.1)}
+
+/* ---------- FILTER ROW + CARDS ---------- */
+.filter{display:flex;align-items:center;gap:10px;margin:18px 0 12px;flex-wrap:wrap}
+.filter select{font:inherit;font-weight:600;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--navy)}
+.filter .clear{font-size:13px;color:var(--blue);cursor:pointer;font-weight:600;display:none}
+.filter .upd{margin-left:auto;font-size:12px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;grid-template-columns:minmax(0,1fr) 64px;gap:8px 12px;position:relative;transition:box-shadow .15s}
+.card:hover{box-shadow:0 8px 24px rgba(11,42,91,.10)}
+.card.win{background:linear-gradient(180deg,#fff 60%,var(--win-bg))}
+.card.loss{background:linear-gradient(180deg,#fff 60%,var(--loss-bg))}
+.card.run{background:linear-gradient(180deg,#fff 60%,var(--run-bg))}
+.card .name{font-family:Poppins;font-weight:800;font-size:17px;color:var(--navy);line-height:1.2}
+.card .office{font-size:13.5px;font-weight:600;color:var(--ink);margin-top:3px}
+.card .meta{font-size:12px;color:var(--muted);margin-top:4px}
+.card .meta b{color:var(--navy)}
+.card .av{grid-column:2;grid-row:1;align-self:start;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Poppins;font-weight:800;font-size:18px;color:var(--navy);background:var(--ice-2);border:3px solid #c7d2e6;position:relative}
+.card.win .av{border-color:var(--win)}.card.loss .av{border-color:var(--loss)}.card.run .av{border-color:var(--run)}
+.card .av.measure{font-size:22px}
+.card .foot{grid-column:1/3;display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-top:6px;padding-top:10px;border-top:1px dashed var(--line)}
+.card .foot .l{font-size:11px;color:var(--muted);line-height:1.5}
+.card .foot .pct{font-family:Poppins;font-weight:900;font-size:26px;color:var(--navy);line-height:1}
+.card.loss .foot .pct{color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:5px;font-family:Poppins;font-weight:800;font-size:11px;padding:4px 9px;border-radius:999px;letter-spacing:.5px}
+.badge.win{background:var(--win);color:#fff}.badge.loss{background:var(--loss);color:#fff}.badge.run{background:var(--run);color:#fff}
+.flip{position:absolute;top:10px;right:10px;background:var(--blue);color:#fff;font-family:Poppins;font-weight:800;font-size:10px;padding:3px 7px;border-radius:6px;letter-spacing:.5px}
+.card .flipin{display:inline-block;vertical-align:middle;margin-left:6px;background:var(--blue);color:#fff;font-family:Poppins;font-weight:800;font-size:10px;padding:2px 6px;border-radius:6px;letter-spacing:.5px}
+.empty{padding:40px;text-align:center;color:var(--muted)}
+.showmore{display:block;margin:16px auto 0;font:inherit;font-weight:700;background:#fff;border:1px solid var(--line);color:var(--navy);padding:10px 20px;border-radius:999px;cursor:pointer}
+
+/* ---------- ARCHIVE ---------- */
+.archive{margin-top:48px;padding-top:28px;border-top:3px solid var(--navy)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.chip{font-family:Poppins;font-weight:700;font-size:12px;padding:5px 10px;border-radius:8px;background:#fff;border:1px solid var(--line);color:var(--navy);cursor:pointer}
+.chip.on{background:var(--navy);color:#fff}
+.table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:13.5px}
+.table th{background:var(--ice);text-align:left;padding:10px 12px;font-family:Poppins;font-size:12px;letter-spacing:1px;color:var(--navy)}
+.table td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:middle}
+.table td.n{font-weight:700;color:var(--navy)}
+.table td.d{color:var(--muted);white-space:nowrap}
+.table td.p{font-family:Poppins;font-weight:800;text-align:right;white-space:nowrap}
+.twrap{overflow:auto}
+
+/* ---------- FOOTER ---------- */
+footer{margin-top:60px;background:var(--navy-2);color:#cbd5e1;padding:40px 20px;font-size:13px;line-height:1.7}
+footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+@media(max-width:700px){footer .wrap{grid-template-columns:1fr}}
+footer h3{color:#fff;margin:0 0 6px;font-size:16px}
+footer a{color:var(--sky)}
+footer .sig{grid-column:1/3;border-top:1px solid rgba(255,255,255,.12);padding-top:16px;font-family:Poppins;font-weight:800;letter-spacing:6px;color:var(--sky);font-size:18px;word-break:break-all;line-height:1.4}
+@media(max-width:700px){footer .sig{grid-column:1}}
+
+/* ---------- MODAL ---------- */
+.modal{position:fixed;inset:0;background:rgba(7,27,61,.72);display:flex;align-items:center;justify-content:center;z-index:50;padding:20px}
+.modal.hide{display:none}
+.modal .box{background:#fff;border-radius:20px;max-width:760px;width:100%;max-height:88vh;overflow:auto;padding:28px;position:relative;
+  background-image:repeating-linear-gradient(135deg,rgba(29,78,216,.06) 0 14px,transparent 14px 28px)}
+.modal .x{position:absolute;top:12px;right:14px;border:0;background:var(--ice-2);color:var(--navy);font-weight:800;border-radius:50%;width:34px;height:34px;cursor:pointer;font-size:16px}
+.modal .kick{font-family:Poppins;font-weight:800;letter-spacing:3px;font-size:12px;color:var(--blue);text-align:center}
+.modal h2{margin:4px 0 18px;text-align:center;font-size:clamp(26px,5vw,44px);color:var(--navy);font-weight:900}
+.wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.wgrid .w{text-align:center}
+.wgrid .face{margin:0 auto 6px;width:70px;height:70px;font-size:20px;border-width:4px}
+.wgrid .face .chk{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);background:var(--win);color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:999px;font-family:Poppins;white-space:nowrap}
+.wgrid .wn{font-family:Poppins;font-weight:800;font-size:13px;color:var(--navy);line-height:1.2}
+.wgrid .wo{font-size:11px;color:var(--muted);line-height:1.3;margin-top:2px}
+.wgrid .wo b{color:var(--blue)}
+</style>
+</head>
+<body>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="stars"></div>
+  <div class="logo" aria-hidden="true">
+    <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="30" fill="#fff" opacity=".12"/><path d="M6 40c8-14 14-14 22 0s14 14 22 0 12-10 8-2" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M8 50c7-10 12-10 19 0s12 10 19 0 10-8 10-4" stroke="#7dd3fc" stroke-width="4" stroke-linecap="round" fill="none"/><path d="M34 10l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" fill="#fff"/></svg>
+  </div>
+  <h1>BLUE W<span class="stretch">AAAAAAAAAAAAAAA</span>VE</h1>
+  <div class="sub">Elections Tracker 2026</div>
+  <a class="cta" href="#join">🌊 Ride the wave with us <small>A majority is a team sport + you</small></a>
+  <div class="plug">Already on board? <a href="#join">Plug in!</a></div>
+  <svg class="waves" viewBox="0 0 1440 70" preserveAspectRatio="none"><path d="M0 40c120 30 240 30 360 0s240-30 360 0 240 30 360 0 240-30 360 0v30H0z" fill="#f4f7fc"/></svg>
+</header>
+
+<!-- ================= SEASON SCOREBOARD ================= -->
+<section class="season">
+  <div class="wrap">
+    <div class="label">TEAM<br>BLUE WAVE<br><span style="opacity:.6">SEASON</span></div>
+    <div class="donut" id="seasonDonut"></div>
+    <div class="legend" id="seasonLegend"></div>
+    <div class="tagline">it's not a wave, it's a tide…</div>
+  </div>
+</section>
+
+<main class="wrap">
+
+  <!-- ================= LIVE ================= -->
+  <div class="day">
+    <span class="pill live"><i></i>LIVE</span>
+    <h2>Tuesday, November 3</h2>
+    <span class="tag"><i></i> nationally tracked</span>
+  </div>
+  <div class="blog">📣 <b>Live blog:</b>&nbsp;Democrats win the House and Senate, flipping six Senate seats and four governorships as voters punish an unpopular president.
+    <a class="more" href="https://www.nbcnews.com/politics/2026-election/live-blog/midterm-election-results-2026-news-trump-live-updates-rcna605763" target="_blank" rel="noopener">Read →</a></div>
+
+  <div class="tabs"><button class="on" data-view="states">States</button><button data-view="cands">Candidates</button></div>
+
+  <div class="panel">
+    <div class="cats" id="cats"></div>
+    <div id="mapView" class="map"></div>
+    <div id="candView" class="faces" style="display:none"></div>
+    <div class="mini">
+      <div class="donut" id="liveDonut"></div>
+      <div class="legend" id="liveLegend"></div>
+    </div>
+  </div>
+
+  <div class="filter">
+    <select id="stateSel"><option value="">All states</option></select>
+    <select id="statusSel"><option value="">All results</option><option value="win">Wins</option><option value="run">Still counting</option><option value="loss">Losses</option></select>
+    <span class="clear" id="clearBtn">✕ clear filters</span>
+    <span class="upd">Last updated: <b id="upd"></b></span>
+  </div>
+
+  <div class="grid" id="cards"></div>
+  <button class="showmore" id="showMore" style="display:none">Show all races</button>
+
+  <!-- ================= ARCHIVE ================= -->
+  <section class="archive">
+    <div class="day" style="margin-top:0">
+      <span class="pill next">2026</span>
+      <h2>Results (so far)</h2>
+      <span class="tag" id="archCount"></span>
+    </div>
+    <div class="chips" id="archChips"></div>
+    <div class="twrap"><table class="table" id="archTable"><thead><tr><th>DATE</th><th>CANDIDATE / MEASURE</th><th>RACE</th><th>ST</th><th>RESULT</th><th style="text-align:right">VOTE</th></tr></thead><tbody></tbody></table></div>
+  </section>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer id="join">
+  <div class="wrap">
+    <div>
+      <h3>Data updates as counts come in.</h3>
+      Vote counts from the Associated Press; race calls from the NBC News Decision Desk. This page is a snapshot as of <b id="upd2"></b> — reload for the latest once the data file is refreshed.
+    </div>
+    <div>
+      <h3>Blue Wave is independent and volunteer-run.</h3>
+      Not affiliated with any party committee or candidate. Think pragmatic, big-tent, win-the-middle Democrats are the ones who actually flip seats? <a href="#join">That's the wave. Jump in.</a>
+    </div>
+    <div class="sig">SPLAAAAAAAAASH<br>AAAAAAAAAAAAAA<br>AAAAAAAAAAAAAA</div>
+  </div>
+</footer>
+
+<!-- ================= CONGRATS MODAL ================= -->
+<div class="modal" id="modal">
+  <div class="box">
+    <button class="x" id="closeModal" aria-label="Close">✕</button>
+    <div class="kick" id="calledCount"></div>
+    <h2>Congratulations!</h2>
+    <div class="wgrid" id="winners"></div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+(function(){
+  const R = window.RACES;
+  const LIVE_DATE = "11/3";
+  const CATS = [["Senate","S"],["House","H"],["Governor","G"],["Ballot","B"]];
+  const CATL = Object.fromEntries(CATS);
+  const STATES = {AL:"Alabama",AK:"Alaska",AZ:"Arizona",AR:"Arkansas",CA:"California",CO:"Colorado",CT:"Connecticut",DE:"Delaware",DC:"District of Columbia",FL:"Florida",GA:"Georgia",HI:"Hawaii",ID:"Idaho",IL:"Illinois",IN:"Indiana",IA:"Iowa",KS:"Kansas",KY:"Kentucky",LA:"Louisiana",ME:"Maine",MD:"Maryland",MA:"Massachusetts",MI:"Michigan",MN:"Minnesota",MS:"Mississippi",MO:"Missouri",MT:"Montana",NE:"Nebraska",NV:"Nevada",NH:"New Hampshire",NJ:"New Jersey",NM:"New Mexico",NY:"New York",NC:"North Carolina",ND:"North Dakota",OH:"Ohio",OK:"Oklahoma",OR:"Oregon",PA:"Pennsylvania",RI:"Rhode Island",SC:"South Carolina",SD:"South Dakota",TN:"Tennessee",TX:"Texas",UT:"Utah",VT:"Vermont",VA:"Virginia",WA:"Washington",WV:"West Virginia",WI:"Wisconsin",WY:"Wyoming"};
+  // tile grid: [abbr, col, row]
+  const GRID = [["AK",0,0],["ME",11,0],["VT",10,1],["NH",11,1],
+    ["WA",1,2],["ID",2,2],["MT",3,2],["ND",4,2],["MN",5,2],["IL",6,2],["WI",7,2],["MI",8,2],["NY",9,2],["RI",10,2],["MA",11,2],
+    ["OR",1,3],["NV",2,3],["WY",3,3],["SD",4,3],["IA",5,3],["IN",6,3],["OH",7,3],["PA",8,3],["NJ",9,3],["CT",10,3],
+    ["CA",1,4],["UT",2,4],["CO",3,4],["NE",4,4],["MO",5,4],["KY",6,4],["WV",7,4],["VA",8,4],["MD",9,4],["DE",10,4],
+    ["AZ",2,5],["NM",3,5],["KS",4,5],["AR",5,5],["TN",6,5],["NC",7,5],["SC",8,5],["DC",9,5],
+    ["OK",4,6],["LA",5,6],["MS",6,6],["AL",7,6],["GA",8,6],
+    ["HI",0,7],["TX",4,7],["FL",9,7]];
+  const ORDER = {win:0,run:1,loss:2};
+  const LVL = {Senate:0,Governor:1,House:2,Ballot:3};
+  const WORD = {win:"✓ WIN",run:"COUNTING",loss:"LOSS"};
+  const $ = s=>document.querySelector(s);
+  const esc = s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const initials = n => n.startsWith("YES")?"👍":n.startsWith("NO")?"👎":n.split(/\s+/).filter(w=>/^[A-Z]/.test(w)).map(w=>w[0]).slice(0,2).join("");
+  const fmt = p => p==null?"—":p.toFixed(1)+"%";
+
+  $("#upd").textContent = window.LAST_UPDATE; $("#upd2").textContent = window.LAST_UPDATE;
+
+  // ---------- donut ----------
+  function donut(el, list, legendEl, bigLabel){
+    const w=list.filter(x=>x.s==="win").length, r=list.filter(x=>x.s==="run").length, l=list.filter(x=>x.s==="loss").length, t=list.length||1;
+    const C=2*Math.PI*40; let off=0;
+    const seg=(n,color)=>{const len=C*n/t;const s=`<circle cx="48" cy="48" r="40" fill="none" stroke="${color}" stroke-width="12" stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-off}"/>`;off+=len;return s};
+    el.innerHTML=`<svg width="96" height="96" viewBox="0 0 96 96"><circle cx="48" cy="48" r="40" fill="none" stroke="#e5e9f2" stroke-width="12"/>${seg(w,"#16a34a")}${seg(r,"#f59e0b")}${seg(l,"#dc2626")}</svg><div class="num">${list.length}</div>`;
+    legendEl.innerHTML=`<div><b class="w">${w}</b> WINS</div><div><b class="r">${r}</b> COUNTING</div><div><b class="l">${l}</b> LOSSES</div>`;
+  }
+  donut($("#seasonDonut"), R, $("#seasonLegend"));
+
+  // ---------- live set + filters ----------
+  const live = R.filter(x=>x.date===LIVE_DATE);
+  donut($("#liveDonut"), live, $("#liveLegend"));
+  let fState="", fCat="", fStatus="", showAll=false, view="states";
+
+  // state select
+  const stSel=$("#stateSel");
+  Object.keys(STATES).filter(s=>live.some(x=>x.st===s)).sort((a,b)=>STATES[a].localeCompare(STATES[b])).forEach(s=>{
+    const o=document.createElement("option");o.value=s;o.textContent=`${STATES[s]} (${live.filter(x=>x.st===s).length})`;stSel.appendChild(o)});
+  stSel.onchange=e=>{fState=e.target.value;render()};
+  $("#statusSel").onchange=e=>{fStatus=e.target.value;render()};
+  $("#clearBtn").onclick=()=>{fState="";fCat="";fStatus="";stSel.value="";$("#statusSel").value="";render()};
+  $("#showMore").onclick=()=>{showAll=true;render()};
+  document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabs button").forEach(x=>x.classList.remove("on"));b.classList.add("on");view=b.dataset.view;$("#mapView").style.display=view==="states"?"grid":"none";$("#candView").style.display=view==="cands"?"flex":"none";});
+
+  function filtered(){return live.filter(x=>(!fState||x.st===fState)&&(!fCat||x.lvl===fCat)&&(!fStatus||x.s===fStatus)).sort((a,b)=>ORDER[a.s]-ORDER[b.s]||LVL[a.lvl]-LVL[b.lvl]||(b.flip?1:0)-(a.flip?1:0)||(b.p??-1)-(a.p??-1));}
+
+  function renderCats(){
+    $("#cats").innerHTML=CATS.map(([c,k])=>`<div class="cat ${fCat===c?"on":""}" data-c="${c}"><span class="k">${k}</span>${c==="Ballot"?"Ballot measure":c}<span class="cnt">${live.filter(x=>x.lvl===c).length}</span></div>`).join("");
+    document.querySelectorAll(".cat").forEach(el=>el.onclick=()=>{fCat=fCat===el.dataset.c?"":el.dataset.c;render()});
+  }
+  function renderMap(){
+    const m=$("#mapView"); m.innerHTML="";
+    const cells=[]; for(let r=0;r<8;r++)for(let c=0;c<12;c++)cells.push(null);
+    GRID.forEach(([ab,c,r])=>cells[r*12+c]=ab);
+    m.innerHTML=cells.map(ab=>{
+      if(!ab)return `<div class="tile empty"></div>`;
+      const rs=live.filter(x=>x.st===ab&&(!fCat||x.lvl===fCat)&&(!fStatus||x.s===fStatus));
+      const shown=rs.slice(0,8);
+      return `<div class="tile ${fState===ab?"on":""} ${rs.length?"":"none"}" data-st="${ab}" title="${STATES[ab]}: ${rs.length} race${rs.length===1?"":"s"}"><span class="ab">${ab}</span><span class="dots">${shown.map(x=>`<span class="dot ${x.s}">${CATL[x.lvl]}</span>`).join("")}</span>${rs.length>8?`<span class="more">+${rs.length-8}</span>`:""}</div>`}).join("");
+    document.querySelectorAll(".tile[data-st]").forEach(t=>t.onclick=()=>{const s=t.dataset.st;fState=fState===s?"":s;stSel.value=fState;render();});
+  }
+  function renderFaces(){
+    $("#candView").innerHTML=filtered().map(x=>`<div class="face ${x.s}" title="${esc(x.n)} — ${esc(x.o)} (${fmt(x.p)})">${initials(x.n)}</div>`).join("")||`<div class="empty">No races match.</div>`;
+  }
+  function card(x){
+    return `<div class="card ${x.s}">
+      <div><div class="name">${esc(x.n)}${x.flip?`<span class="flipin">FLIP</span>`:""}</div><div class="office">${esc(x.o)}</div>
+      <div class="meta"><b>${x.lvl==="Ballot"?"Ballot measure":x.lvl}</b> · ${esc(x.reg)} · ${x.st}</div></div>
+      <div class="av ${x.lvl==="Ballot"?"measure":""}">${initials(x.n)}</div>
+      <div class="foot"><div class="l">${x.note?`<b>${esc(x.note)}</b><br>`:""}${x.r!=null?`Last update: ${window.LAST_UPDATE.split(" · ")[0]}<br>${x.r.toFixed(2)}% reporting`:""}<br><span class="badge ${x.s}">${WORD[x.s]}</span></div><div class="pct">${fmt(x.p)}</div></div>
+    </div>`;
+  }
+  function render(){
+    renderCats(); renderMap(); renderFaces();
+    const list=filtered(); const anyF=fState||fCat||fStatus;
+    $("#clearBtn").style.display=anyF?"inline":"none";
+    const limit=(anyF||showAll)?list.length:48;
+    $("#cards").innerHTML=list.slice(0,limit).map(card).join("")||`<div class="empty">No races match those filters.</div>`;
+    $("#showMore").style.display=list.length>limit?"block":"none";
+    if(list.length>limit)$("#showMore").textContent=`Show all ${list.length} races`;
+  }
+  render();
+
+  // ---------- archive ----------
+  const called=R.filter(x=>x.s!=="run").sort((a,b)=>{const [am,ad]=a.date.split("/").map(Number),[bm,bd]=b.date.split("/").map(Number);return (bm-am)||(bd-ad)||ORDER[a.s]-ORDER[b.s]});
+  let aState="";
+  const archStates=[...new Set(called.map(x=>x.st))].sort();
+  function renderArch(){
+    $("#archChips").innerHTML=`<span class="chip ${aState?"":"on"}" data-s="">All</span>`+archStates.map(s=>`<span class="chip ${aState===s?"on":""}" data-s="${s}">${s}</span>`).join("");
+    document.querySelectorAll("#archChips .chip").forEach(c=>c.onclick=()=>{aState=c.dataset.s;renderArch()});
+    const rows=called.filter(x=>!aState||x.st===aState);
+    const w=rows.filter(x=>x.s==="win").length;
+    $("#archCount").textContent=`${rows.length} races called · ${w} wins · ${rows.length-w} losses`;
+    $("#archTable tbody").innerHTML=rows.map(x=>`<tr><td class="d">${x.date}</td><td class="n">${esc(x.n)}${x.flip?` <span class="badge" style="background:var(--blue);color:#fff;font-size:9px;padding:2px 6px">FLIP</span>`:""}</td><td>${esc(x.o)}</td><td>${x.st}</td><td><span class="badge ${x.s}">${WORD[x.s]}</span></td><td class="p">${fmt(x.p)}</td></tr>`).join("");
+  }
+  renderArch();
+
+  // ---------- congrats modal ----------
+  const winners=live.filter(x=>x.s==="win").sort((a,b)=>(a.lvl==="Ballot")-(b.lvl==="Ballot"));
+  $("#calledCount").textContent=`${live.filter(x=>x.s!=="run").length} RACES CALLED`;
+  $("#winners").innerHTML=winners.map(x=>`<div class="w"><div class="face win">${initials(x.n)}<span class="chk">✓ WIN</span></div><div class="wn">${esc(x.n)}</div><div class="wo">${esc(x.o)}${x.flip?"<br><b>FLIP</b>":""}</div></div>`).join("");
+  const close=()=>$("#modal").classList.add("hide");
+  $("#closeModal").onclick=close; $("#modal").onclick=e=>{if(e.target.id==="modal")close()};
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")close()});
+})();
+</script>
+</body>
+</html>
